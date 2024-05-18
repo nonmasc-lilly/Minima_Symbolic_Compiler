@@ -1,8 +1,14 @@
 import sys
 
 
+debug = False;
+
 if len(sys.argv) < 2:
     print(f"USAGE: {sys.argv[0]} <file path>");
+    exit(1);
+if len(sys.argv) > 2:
+    for i in sys.argv[2:]:
+        if i == '-d': debug = True;
 file = open(sys.argv[1], "r");
 content = file.read();
 file.close();
@@ -17,9 +23,10 @@ pointer = 0;
 def apex(x):
     global ret
     global pointer
+    global debug
     ret = x << (pointer*3) | ret;
     pointer += 1;
-    print(f"{x}: {ret:b}");
+    if debug: print(f"{x}: {ret:b}");
 
 for idx, i in enumerate(content):
     if atstate:
@@ -57,3 +64,5 @@ for idx, i in enumerate(content):
         apex(5);
         atcomp = True
 
+
+print(f"final: {ret:b}");
